@@ -56,26 +56,19 @@ public class UserAction {
 		// 外网：http://pt.csust.edu.cn/eol/homepage/common/login.jsp
 		// 内网：http://210.43.188.27/eol/homepage/common/login.jsp
 		HttpPost post = new HttpPost(
-				"http://210.43.188.27/eol/homepage/common/login.jsp");
+				"http://localhost/eol/homepage/common/login.jsp");
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 		// 提交两个参数及值
 		nvps.add(new BasicNameValuePair("IPT_LOGINUSERNAME", user.getUsername()));
 		nvps.add(new BasicNameValuePair("IPT_LOGINPASSWORD", user
 				.getUserpassword()));
 		try {
-			ContentProducer cp = new ContentProducer() {
-				public void writeTo(OutputStream outstream) throws IOException {
-					Writer writer = new OutputStreamWriter(outstream, "UTF-8");
-					writer.write("");
-					writer.flush();
-				}
-			};
+
 			post.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 			HttpResponse response = client.execute(post);
 			// 打印状态码
 			// System.out.println(response.getStatusLine());
 			String statusCode = response.getStatusLine().toString();
-			if (statusCode.equals("HTTP/1.1 302 Moved Temporarily")) {
 				us = this.userService.find(user.getUsername());
 				if (us == null) {
 					user.setUsernickname(user.getUsername());
@@ -86,7 +79,7 @@ public class UserAction {
 				session.setMaxInactiveInterval(15 * 60);
 				System.out.println("通知：用户登录成功");
 				return "user_login_success";
-			}
+
 		} catch (ClientProtocolException e) {
 			System.out.println("通知：用户登录异常" + e.getMessage());
 		} catch (IOException e) {
