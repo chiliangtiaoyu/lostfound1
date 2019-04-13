@@ -132,4 +132,18 @@ public class User {
 		this.usercomments = usercomments;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", userpassword='" + userpassword + '\'' +
+				", usernickname='" + usernickname + '\'' +
+				", userphone='" + userphone + '\'' +
+				", userqq='" + userqq + '\'' +
+				", userstatus=" + userstatus +
+				", usergoods=" + usergoods +
+				", usercomments=" + usercomments +
+				'}';
+	}
 }
